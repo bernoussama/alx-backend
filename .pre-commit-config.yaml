@@ -1,0 +1,20 @@
+repos:
+  # Standard hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: detect-private-key
+  - repo: https://github.com/hhatto/autopep8
+    rev: v2.3.1 # select the tag or revision you want, or run `pre-commit autoupdate`
+    hooks:
+      - id: autopep8
+  - repo: local
+    hooks:
+      - id: executable-python
+        name: executable python
+        description: Make python scripts executable
+        entry: chmod +x
+        language: system
+        files: \.py$
