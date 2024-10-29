@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" BaseCaching module
+""" Base cache module
 """
 
 
@@ -35,7 +35,10 @@ class BaseCaching:
 
 
 class BasicCache(BaseCaching):
-    """BasicCache"""
+    """basic cache defines:
+    - constants of your caching system
+    - where your data are stored (in a dictionary)
+    """
 
     def __init__(self):
         """Initiliaze"""
