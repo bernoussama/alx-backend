@@ -43,8 +43,8 @@ class Server:
         dataset = self.indexed_dataset()
         assert index >= 0 and index < len(dataset)
 
-        data = []
         next_index = index
+        data = []
         count = 0
 
         while count < page_size and next_index < len(dataset):
@@ -53,9 +53,10 @@ class Server:
                 count += 1
             next_index += 1
 
-        return {
+        hypermedia = {
             "index": index,
             "next_index": next_index,
             "page_size": len(data),
             "data": data,
         }
+        return hypermedia
