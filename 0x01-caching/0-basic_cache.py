@@ -37,7 +37,9 @@ class BaseCaching:
 class BasicCache(BaseCaching):
     """BasicCache"""
 
-    super().__init__()
+    def __init__(self):
+        """Initiliaze"""
+        super().__init__()
 
     def put(self, key, item):
         if (key or item) is None:
