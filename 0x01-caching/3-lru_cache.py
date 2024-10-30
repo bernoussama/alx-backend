@@ -5,7 +5,7 @@ from base_caching import BaseCaching
 from collections import OrderedDict
 
 
-class LIFOCache(BaseCaching):
+class LRUCache(BaseCaching):
     """basic cache defines:
     - constants of your caching system
     - where your data are stored (in a dictionary)
@@ -31,6 +31,6 @@ class LIFOCache(BaseCaching):
         # if key is None or key not in self.cache_data:
         #     return None
         # else:
-        if key not in self.cache_data:
+        if key in self.cache_data:
             self.cache_data.move_to_end(key, last=False)
         return self.cache_data.get(key, None)
