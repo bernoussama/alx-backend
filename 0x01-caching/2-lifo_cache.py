@@ -20,7 +20,7 @@ class LIFOCache(BaseCaching):
         """Add an item in the cache"""
         if key is None or item is None:
             return
-        if len(self.cache_data) + 1 > self.MAX_ITEMS:
+        if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
             last, _ = self.cache_data.popitem(True)
             print("DISCARD:", last)
         self.cache_data[key] = item
