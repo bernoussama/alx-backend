@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" FIFO cache module
+""" LIFO cache module
 """
 from base_caching import BaseCaching
 from collections import OrderedDict
@@ -20,10 +20,11 @@ class LIFOCache(BaseCaching):
         """Add an item in the cache"""
         if key is None or item is None:
             return
-        self.cache_data[key] = item
         if len(self.cache_data) > self.MAX_ITEMS:
-            first, _ = self.cache_data.popitem(last=True)
-            print("DISCARD: {}".format(first))
+            last, _ = self.cache_data.popitem(last=True)
+            print("DISCARD: {}".format(last))
+        self.cache_data[key] = item
+        self.cache_data.move_to_end(key, last=True)
 
     def get(self, key):
         """Get an item by key"""
