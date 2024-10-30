@@ -5,7 +5,7 @@ from base_caching import BaseCaching
 from collections import OrderedDict
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """basic cache defines:
     - constants of your caching system
     - where your data are stored (in a dictionary)
