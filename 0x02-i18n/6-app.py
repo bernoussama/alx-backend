@@ -6,7 +6,7 @@ from typing import Optional
 
 
 class Config:
-    """The application configuration."""
+    """Configuration for supported languages and defaults."""
 
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
@@ -14,7 +14,6 @@ class Config:
 
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 app.config.from_object(Config)
 babel = Babel(app)
 
@@ -27,31 +26,35 @@ users = {
 
 
 def get_user() -> Optional[dict]:
-    """Return the user data for the current user."""
+    """Retrieve a user based on the login ID."""
     user_id = request.args.get("login_as")
     return users.get(int(user_id)) if user_id else None
 
 
 @app.before_request
 def before_request() -> None:
-    """Set the user data for the current user."""
+    """Set the user for the current request context."""
     g.user = get_user()
 
 
 @babel.localeselector
 def get_locale() -> str:
-    """Return the appropriate locale based on the user's preferences."""
-    return (
-        request.args.get("locale")
-        if request.args.get("locale") in app.config["LANGUAGES"]
-        else request.accept_languages.best_match(app.config["LANGUAGES"])
-    )
+    """Determine the best match locale for the current request."""
+    locale = request.args.get("locale")
+    if locale in app.config["LANGUAGES"]:
+        return locale
+    if g.user and g.user.get("locale") in app.config["LANGUAGES"]:
+        return g.user["locale"]
+    header_locale = request.headers.get("locale")
+    if header_locale in app.config["LANGUAGES"]:
+        return header_locale
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route("/")
 def index() -> str:
-    """Render the index page."""
-    return render_template("5-index.html")
+    """Render the home/index page."""
+    return render_template("6-index.html")
 
 
 if __name__ == "__main__":
