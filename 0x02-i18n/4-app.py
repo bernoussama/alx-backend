@@ -14,6 +14,7 @@ class Config:
 # Create the Flask app instance
 app = Flask(__name__)
 app.config.from_object(Config)
+app.url_map.strict_slashes = False
 
 # Initialize Babel with the app
 babel = Babel(app)
@@ -39,4 +40,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run("0.0.0.0", debug=True)
