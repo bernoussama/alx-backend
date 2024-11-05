@@ -12,6 +12,7 @@ class Config:
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.config.from_object(Config)
 babel = Babel(app)
 
@@ -24,17 +25,20 @@ users = {
 
 
 def get_user() -> Optional[dict]:
+    """Return the user data for the current user."""
     user_id = request.args.get("login_as")
     return users.get(int(user_id)) if user_id else None
 
 
 @app.before_request
 def before_request() -> None:
+    """Set the user data for the current user."""
     g.user = get_user()
 
 
 @babel.localeselector
 def get_locale() -> str:
+    """Return the appropriate locale based on the user's preferences."""
     return (
         request.args.get("locale")
         if request.args.get("locale") in app.config["LANGUAGES"]
@@ -44,6 +48,7 @@ def get_locale() -> str:
 
 @app.route("/")
 def index() -> str:
+    """Render the index page."""
     return render_template("5-index.html")
 
 
