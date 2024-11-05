@@ -2,7 +2,6 @@
 """A Basic Flask app with internationalization support."""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
-from typing import Optional
 
 
 class Config:
@@ -25,7 +24,7 @@ users = {
 }
 
 
-def get_user() -> Optional[dict]:
+def get_user():
     """Retrieve a user based on the login ID."""
     user_id = request.args.get("login_as")
     return users.get(int(user_id)) if user_id else None
